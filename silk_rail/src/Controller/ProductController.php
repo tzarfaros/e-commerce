@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route(path: "/api/products", name: "products_")]
 class ProductController extends AbstractController
@@ -59,11 +61,42 @@ class ProductController extends AbstractController
         $product->setName($data['name'] ?? $product->getName());
         $product->setPrice($data['price'] ?? $product->getPrice());
         $product->setDescription($data['description'] ?? $product->getDescription());
-        $product->setPhoto($data['photo'] ?? $product->getPhoto());
-
         $this->products->save($product,true);
 
         return $this->json($product);
+    }
+
+    #[Route(path: "/{id}/photo", name: "upload_photo", methods: ["POST"])]
+    function uploadPhoto(int $id, Request $request,SluggerInterface $slugger): Response
+    {
+        $product = $this->products->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(sprintf('No product found with id "%s"', $id));
+        }
+
+        $photo = $request->files->get('photo');
+
+        if (!$photo) {
+            throw $this->createNotFoundException(sprintf('No photo found'));
+        }
+        $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $slugger->slug($originalFilename);
+        $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+        try {
+            $photo->move(
+                $this->getParameter('photos_directory'),
+                $newFilename
+            );
+
+        } catch (FileException $e) {
+            throw $this->createNotFoundException(sprintf('Error uploading photo => %s', $e));
+        }
+        $product->setPhoto($newFilename);
+        $this->products->save($product,true);
+
+        return $this->json($product, Response::HTTP_ACCEPTED);
     }
 
     #[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]

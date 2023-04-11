@@ -1,0 +1,72 @@
+.containerListAvantages {
+    width: 100vw;
+    height: 40vh;
+    background-position: center;
+    background-attachment: fixed;
+    filter: grayscale(100%); /*background-color: #2e2e2e;*/
+    /*background-image: url("../../assets/images/images/greens-look-portrait-inja-zalta-wallpaper-594ff94c3d01bdd8192219261b8eb858.jpg");*/
+    /*background-image: url("../../assets/images/images/peakpx.jpg");*/
+    /*background-image: url("../../assets/images/images/5445750.jpg");*/
+    /*background-image: url("../../assets/images/images/35405850-jpg.png");*/
+    background-image: url("../../assets/images/images/1920-x-1080-2022-Pills-Cyan.jpg");
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    color: white;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.containerListAvantagesItem {
+    /*background-color: rgba(46, 46, 46, 0.7);*/
+    background-color: rgba(46, 46, 46, 0.8);
+    width: 200px;
+    height: 200px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 32px;
+    text-align: center;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.containerListAvantagesItemFlex {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.containerListAvantagesItemFlexContainerImage {
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.containerListAvantagesItemFlexContainerImage img {
+    width: 100%;
+}
+
+.containerListAvantagesItemFlexContainerName {
+
+}
+
+.containerListAvantagesItemFlexContainerName h5 {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    font-size: 20px;
+
+}

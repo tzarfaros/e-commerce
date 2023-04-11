@@ -1,0 +1,41 @@
+.ctnListItemBody {
+    width: 90%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.ctnTitleListItemBody {
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 65px;
+}
+
+.ctnTitleListItemBody h3 {
+    padding: 0;
+    margin: 10px;
+}
+
+.ovalPlatform {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    background-color: #ecf0f1;
+    height: 7px;
+    border-radius: 100%;
+}
+
+.ovalPlatformRight {
+    margin-left: calc(35% + 5%);
+}
+
+.ovalPlatformLeft {
+    margin-left: calc(35% - 5%);
+}

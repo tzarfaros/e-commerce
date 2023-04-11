@@ -1,0 +1,121 @@
+.ctnCardBasic {
+    max-width: 20%;
+    padding: 30px 20px 20px;
+    border-radius: 7px;
+    text-align: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.ctnCardBasic:hover {
+    transition: 0.4s;
+    background-color: #ecf0f1;
+}
+
+
+.ctnCardBasicImg {
+    width: 95%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 315px;
+    background-image: url("https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    transition: 0.4s;
+}
+
+
+.ctnCardBasic:hover .ctnCardBasicImg {
+    transition: 0.4s;
+    margin-top: 3px;
+    /*margin-bottom: 9px;*/
+}
+
+
+.ctnCardBasicBody {
+    width: 100%;
+}
+
+.ctnCardBasicBody h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    margin-top: 18px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: bold;
+}
+
+.ctnCardBasicBody p {
+    font-size: 14px;
+    font-weight: lighter;
+    text-align: left;
+    letter-spacing: 1.05px;
+    line-height: 18px;
+}
+
+.ctnCardBasicBody div {
+    width: 100%;
+    /*text-align: right;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.ctnCardBasicBody div div {
+    width: 15%;
+    border-radius: 7px;
+    background-color: darkgray;
+    padding: 5px;
+    margin-right: auto;
+    margin-left: 0;
+    transition: 0.4s;
+}
+
+.ctnCardBasicBody div div:hover {
+    transition: 0.4s;
+    background-color: darkgray;
+    -ms-transform: rotate(45deg); /* Internet Explorer */
+    -moz-transform: rotate(45deg); /* Firefox */
+    -webkit-transform: rotate(45deg); /* Safari et Chrome */
+    -o-transform: rotate(45deg); /* Opera */
+}
+
+.ctnCardBasicBody div div img:hover {
+    transition: 0.4s;
+    background-color: darkgray;
+    border-radius: 2px;
+    -ms-transform: rotate(-45deg); /* Internet Explorer */
+    -moz-transform: rotate(-45deg); /* Firefox */
+    -webkit-transform: rotate(-45deg); /* Safari et Chrome */
+    -o-transform: rotate(-45deg); /* Opera */
+}
+
+.ctnCardBasicBody div div img {
+    width: 100%;
+    padding-top: 3px;
+    transition: 0.4s;
+}
+
+.ctnCardBasicBody div span {
+    font-size: 27px;
+    font-weight: bold;
+    text-align: right;
+    letter-spacing: 1.05px;
+    line-height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/*.ctnCardBasicImg img{*/
+/*    width: 100%;*/
+/*}*/

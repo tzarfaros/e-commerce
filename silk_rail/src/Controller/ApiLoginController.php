@@ -23,7 +23,7 @@ class ApiLoginController extends AbstractController
         $token = $this->get('lexik_jwt_authentication.encoder')
             ->encode([
                 'email' => $user->getLogin(),
-                'exp' => time() + 3600, // 1 hour expiration
+                'exp' => time() + 3600000, // 1000 hour expiration
             ]);
 
         return $this->json([

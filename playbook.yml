@@ -1,0 +1,137 @@
+---
+- name: Deploy application e-commerce on VM Debian 11
+  hosts: debian11
+  become: true
+
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    E_ORIGIN: "/var/www/"
+    E_PATH: "{{ E_ORIGIN }}e-commerce/"
+    E_PATH_BACK: "{{ E_PATH }}silk_rail/"
+    E_PATH_FRONT: "{{ E_PATH }}webfront/"
+    E_PATH_DEVOPS: "{{ E_PATH }}devops/"
+    E_URL_REPO_GITHUB: "https://github.com/tzarfaros/e-commerce"
+
+  tasks:
+    # Installer les dépendances
+    - name: Install dependances
+      apt:
+        name: ['curl', 'apt-transport-https', 'ca-certificates', 'gnupg', 'lsb-release', 'nodejs', 'npm', 'git', 'software-properties-common', 'sudo']
+
+    # Ajouter le dépôt de PHP
+    - name: Add PHP packages 
+      apt_repository:
+        repo: 'deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main'
+        state: present
+        filename: 'sury.org-php.list'
+        update_cache: yes
+      when: ansible_distribution_release == 'bullseye'
+
+    # Installer PHP et Composer
+    - name: Install PHP and Composer
+      apt:
+        name: ['php8.2', 'php8.2-cli', 'php8.2-mbstring', 'php8.2-xml', 'php8.2-common', 'php8.2-curl', 'composer']
+        state: latest
+
+    # Installer Docker et Docker Compose
+    - name: Install Docker and Docker Compose
+      apt:
+        name: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
+        state: latest
+
+    # Installer Apache2
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: latest
+
+    # Démarrer et activer le service Apache2
+    - name: Run service Apache2
+      systemd:
+        name: apache2
+        state: started
+        enabled: yes
+
+    # Installer Symfony
+    - name: Install Symfony
+      shell: 'wget https://get.symfony.com/cli/installer -O - | bash'
+      register: symfony_output
+      changed_when: false
+      failed_when: "'The Symfony CLI is already installed' not in symfony_output.stdout"
+
+    # Vérification clone
+    - name: Verification presence repo
+      stat:
+        path: "{{ E_ORIGIN }}/e-commerce"
+      register: file_exist
+
+    # Cloner le projet depuis le référentiel Git
+    - name: clone repo git
+      git:
+        repo: "{{ E_URL_REPO_GITHUB }}"
+        dest: "{{ E_ORIGIN }}"
+        clone: yes
+        version: main
+      when: not file_exist.stat.exists
+
+    # Pull le projet depuis le repo distant
+    - name: Pull repo git
+      become: true
+      git:
+        repo: "{{ E_URL_REPO_GITHUB }}"
+        dest: "{{ E_ORIGIN }}"
+        version: main
+        update: yes
+      when: file_exist.stat.exists
+
+    # Installer les dépendances du projet (back)
+    - name: Install dependances Back
+      command: composer install
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+
+    # Installer l'image de MariaDB Docker (back)
+    - name: Install mariadb:10.3.38 Docker
+      command: docker-compose up -d
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+
+    # Créer la base de données avec Doctrine
+    - name: Create Database
+      shell: |
+        bin/console doctrine:database:create -y
+        bin/console doctrine:migrations:migrate -y
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+
+    # Lancer le serveur (back)
+    - name: Run server Back
+      command: symfony server:start
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+
+    # Exporter configuration Apache2 (back)
+    #- name: Export conf Apache2
+    #  synchronize:
+    #    src: ./e-commerce.conf
+    #    dest: {{ E_PATH_BACK }}
+
+    # Activer la configuration Apache2 et restart (back)
+    #- name: Enable conf Apache2 and restart service Back
+    #  shell: |
+    #    sudo ln -s e-commerce.conf /etc/apache2/sites-enabled/
+    #    sudo systemctl restart apache2
+    #  args:
+    #    chdir: {{ E_PATH_DEVOPS }}
+
+    # Installer les dépendances du projet (Front)
+    - name: Install dependances Front
+      command: npm install
+      args:
+        chdir: "{{ E_PATH_FRONT }}"
+
+    # Lancer le projet React (Front)
+    - name: Run Front
+      command: npm start
+      args:
+        chdir: "{{ E_PATH_FRONT }}"
