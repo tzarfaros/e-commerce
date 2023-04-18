@@ -5,16 +5,18 @@
 
   vars:
     ansible_ssh_private_key_file: ~/.ssh/id_rsa
-    E_ORIGIN: "/var/www/"
-    E_PATH: "{{ E_ORIGIN }}e-commerce/"
-    E_PATH_BACK: "{{ E_PATH }}silk_rail/"
-    E_PATH_FRONT: "{{ E_PATH }}webfront/"
-    E_PATH_DEVOPS: "{{ E_PATH }}devops/"
+    E_ORIGIN: "www/"
+    E_PATH_BACK: "{{ E_ORIGIN }}silk_rail/"
+    E_PATH_FRONT: "{{ E_ORIGIN }}webfront/"
+    E_PATH_DEVOPS: "{{ E_ORIGIN }}devops/"
     E_URL_REPO_GITHUB: "https://github.com/tzarfaros/e-commerce"
+    E_IP: "10.20.81.74"
 
   tasks:
+
     # Installer les dépendances
     - name: Install dependances
+    #  become: true
       apt:
         name: ['curl', 'apt-transport-https', 'ca-certificates', 'gnupg', 'lsb-release', 'nodejs', 'npm', 'git', 'software-properties-common', 'sudo']
 
@@ -27,11 +29,64 @@
         update_cache: yes
       when: ansible_distribution_release == 'bullseye'
 
-    # Installer PHP et Composer
-    - name: Install PHP and Composer
+    - name: Download get-pip.py
+      get_url:
+        url: https://bootstrap.pypa.io/get-pip.py
+        dest: /tmp/get-pip.py
+
+    # Installation pip3
+    - name: Install pip
+      command: python3 /tmp/get-pip.py
+
+    # Installation pymysql
+    - name: Install pymysql
+      pip:
+        name: pymysql
+        state: present
+
+    # Ajouter la clé GPG pour le dépôt PHP
+    - name: Add GPG key for PHP repository
+      apt_key:
+        url: https://packages.sury.org/php/apt.gpg
+        state: present
+
+    # Installer PHP
+    - name: Install PHP
       apt:
-        name: ['php8.2', 'php8.2-cli', 'php8.2-mbstring', 'php8.2-xml', 'php8.2-common', 'php8.2-curl', 'composer']
+        name: ['php8.2', 'php8.2-cli', 'php8.2-mbstring', 'php8.2-xml', 'php8.2-common', 'php8.2-curl', 'php8.2-mysql', 'php8.2-zip']
         state: latest
+
+    # installation mysql-connector-python
+    - name: Install mysql-connector-python
+      become: true
+      pip:
+        name: mysql-connector-python
+        state: present
+
+    # Installer Composer 2.5.5
+    - name: Install Composer 2.5.5
+      become: true
+      shell: >
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.5.5
+
+    # Ajout clé docker 
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    # Ajout docker repo
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+        state: present
+
+    # Mise à jour des paquets
+    #- name: Update packages
+    #  apt:
+    #    update_cache: yes
+    #    upgrade: yes
+
 
     # Installer Docker et Docker Compose
     - name: Install Docker and Docker Compose
@@ -54,15 +109,17 @@
 
     # Installer Symfony
     - name: Install Symfony
-      shell: 'wget https://get.symfony.com/cli/installer -O - | bash'
+      shell: |
+        curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+        sudo apt install symfony-cli
       register: symfony_output
       changed_when: false
-      failed_when: "'The Symfony CLI is already installed' not in symfony_output.stdout"
+      failed_when: "'symfony' not in symfony_output.stdout"
 
     # Vérification clone
     - name: Verification presence repo
       stat:
-        path: "{{ E_ORIGIN }}/e-commerce"
+        path: "{{ E_ORIGIN }}/silk_rail"
       register: file_exist
 
     # Cloner le projet depuis le référentiel Git
@@ -74,55 +131,73 @@
         version: main
       when: not file_exist.stat.exists
 
-    # Pull le projet depuis le repo distant
-    - name: Pull repo git
-      become: true
-      git:
-        repo: "{{ E_URL_REPO_GITHUB }}"
-        dest: "{{ E_ORIGIN }}"
-        version: main
-        update: yes
-      when: file_exist.stat.exists
+    # Vérification env
+    - name: Verification env
+      stat:
+        path: "{{ E_PATH_BACK }}/.env.local"
+      register: env_exist
+
+    # Création .env.local
+    - name: Add .env.local
+      shell: |
+        sudo cp .env .env.local 
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+      when: not env_exist.stat.exists
 
     # Installer les dépendances du projet (back)
     - name: Install dependances Back
-      command: composer install
+      shell: |
+        yes | sudo composer install 
       args:
         chdir: "{{ E_PATH_BACK }}"
 
-    # Installer l'image de MariaDB Docker (back)
-    - name: Install mariadb:10.3.38 Docker
-      command: docker-compose up -d
+    # Vérification clés
+    - name: Verification key jwt
+      stat:
+        path: "{{ E_PATH_BACK }}/config/jwt/private.pem"
+      register: key_exist
+
+    # Générer les clés JWT (back)
+    - name: generate the keys JWT Back
+      command: php bin/console lexik:jwt:generate-keypair
       args:
         chdir: "{{ E_PATH_BACK }}"
+      when: not key_exist.stat.exists
+
+    # Installer l'image de MariaDB Docker (back)
+    - name: Install mariadb:10.3.38 Docker
+      shell: |
+        sudo docker-compose up -d
+      args:
+        chdir: "{{ E_PATH_BACK }}"
+
+    # Vérifier la base de données
+    - name: Verification BDD
+      mysql_db:
+        name: my_database
+        login_user: user
+        login_password: mypassword
+        #login_host: localhost
+        #login_port: 3306
+      register: result
 
     # Créer la base de données avec Doctrine
     - name: Create Database
       shell: |
-        bin/console doctrine:database:create -y
-        bin/console doctrine:migrations:migrate -y
+        php bin/console doctrine:database:create 
+        yes | php bin/console doctrine:migrations:migrate 
       args:
         chdir: "{{ E_PATH_BACK }}"
+      when: result.changed
+
 
     # Lancer le serveur (back)
     - name: Run server Back
-      command: symfony server:start
+      command: symfony local:server:start --port=8000 --no-tls -d
+
       args:
         chdir: "{{ E_PATH_BACK }}"
-
-    # Exporter configuration Apache2 (back)
-    #- name: Export conf Apache2
-    #  synchronize:
-    #    src: ./e-commerce.conf
-    #    dest: {{ E_PATH_BACK }}
-
-    # Activer la configuration Apache2 et restart (back)
-    #- name: Enable conf Apache2 and restart service Back
-    #  shell: |
-    #    sudo ln -s e-commerce.conf /etc/apache2/sites-enabled/
-    #    sudo systemctl restart apache2
-    #  args:
-    #    chdir: {{ E_PATH_DEVOPS }}
 
     # Installer les dépendances du projet (Front)
     - name: Install dependances Front
@@ -132,6 +207,6 @@
 
     # Lancer le projet React (Front)
     - name: Run Front
-      command: npm start
+      command: npm start -d
       args:
         chdir: "{{ E_PATH_FRONT }}"

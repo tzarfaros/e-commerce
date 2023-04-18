@@ -7,7 +7,11 @@ import ScrollVideo from "react-scroll-video";
 import {Controller, Scene} from 'react-scrollmagic';
 import {ScrollTrigger, Timeline, Tween} from 'react-gsap';
 import gsap from 'gsap';
-
+import DeadLogo from "../../assets/images/logos/icons8-crâne-100.png"
+import FuckLogo from "../../assets/images/logos/icons8-majeur-90.png"
+import PrisonLogo from "../../assets/images/logos/icons8-fil-de-fer-barbelé-100.png"
+import DrugLogo from "../../assets/images/logos/icons8-main-avec-une-pilule-100.png"
+import CoolLogo from "../../assets/images/logos/icons8-cool-96.png"
 
 // @ts-ignore
 import DisolvingVideo from '../../assets/videos/disolvingPink.webm';
@@ -68,7 +72,6 @@ const NewCollectionSlide = () => {
     }, []);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -76,12 +79,9 @@ const NewCollectionSlide = () => {
 
     useEffect(() => {
         for (var i = 0; i < document.getElementsByClassName("scrollmagic-pin-spacer").length; i++) {
-            console.log("iciiii")
             // @ts-ignore
             document.getElementsByClassName("scrollmagic-pin-spacer")[i].style.paddingBottom = 0;
         }
-
-
     }, [isScrolledToBottom]);
 
     useEffect(() => {
@@ -124,14 +124,6 @@ const NewCollectionSlide = () => {
 
     return (
         <div className={"containerNewCollection"}>
-            {/*<ScrollVideo*/}
-            {/*    // lower numbers = faster playback*/}
-            {/*    playback={100}*/}
-            {/*    type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'*/}
-            {/*    //src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4"*/}
-            {/*    //src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4"*/}
-            {/*    src={DisolvingReverseVideo}*/}
-            {/*/>*/}
             <Controller>
                 <Scene duration={1600}
                        pin={true}
@@ -147,7 +139,8 @@ const NewCollectionSlide = () => {
                                 width: '100%',
                                 height: '100vh',
                                 overflow: 'hidden',
-                                backgroundColor: "#e1a68c",
+//                                backgroundColor: "#e1a68c",
+                                background: "linear-gradient(-135deg, #d5bfb3, #1787a1)",
                             }}
                                  ref={myElementRef}>
                                 <Timeline totalProgress={progress} paused>
@@ -155,97 +148,48 @@ const NewCollectionSlide = () => {
                                     <Tween
                                         from={{y: '80vh', opacity: 0.5}}
                                         to={{y: '0vh', opacity: 1}}
-                                        duration={1000}
+                                        duration={1600}
                                     >
-                                        <div style={{
-                                            width: '100vw',
-                                            height: "50vh",
-                                            transition: 'transform .4s ease-out',
-                                            position: 'absolute',
-                                            bottom: 0,
-                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-                                            zIndex: 2,
-                                            backgroundColor: "#ebc6b4"
-                                        }}/>
+                                        {/* 1 */}
 
+                                        {/*
+                                        TITLE
+                                        */}
+                                        <Tween
+                                            from={{y: '-30vh', x: "0vw", opacity: 1}}
+                                            to={{y: '-20vh', x: "0vw", opacity: 0}}
+                                            duration={1600}
+                                        >
+                                            <div className={"newCollectionH1Container"}>
+                                                <h1 className={"newCollectionH1"}>Why trust us?</h1>
+                                            </div>
+                                        </Tween>
+                                        {/*
+                                        END TITLE
+                                        */}
 
-                                        {/*<div style={{*/}
-                                        {/*    width: "100vw",*/}
-                                        {/*    textAlign: "center",*/}
-                                        {/*    position: "absolute",*/}
-                                        {/*    zIndex: 10*/}
-                                        {/*}}>*/}
-                                        {/*    <h3 style={{*/}
-                                        {/*        color: "white",*/}
-                                        {/*        fontWeight: "bold",*/}
-                                        {/*        fontSize: 60,*/}
-                                        {/*        marginLeft: "auto",*/}
-                                        {/*        marginRight: "auto",*/}
-                                        {/*    }}>*/}
-                                        {/*        Why trust us ?*/}
-                                        {/*    </h3>*/}
-
-                                        {/*</div>*/}
-
-
+                                        {/* 2 */}
                                     </Tween>
 
-                                    <Tween
-                                        from={{y: '-30vh', x: "0vw", opacity: 0}}
-                                        to={{y: '-20vh', x: "0vw", opacity: 1}}
-                                        duration={1000}
-                                    >
-                                        <h1 style={{
-                                            width: '60%',
-                                            marginLeft: '40%',
-                                            transition: 'transform .4s ease-out',
-                                            position: 'absolute',
-                                            color: "white",
-                                            fontSize: 48,
-                                            letterSpacing: 2,
-                                            textAlign: "center",
-                                            zIndex: 2
-                                        }}>Fast Delivery!</h1>
-                                    </Tween>
-
-                                    <Tween
-                                        from={{y: '-100vh', opacity: 0}}
-                                        to={{y: '0vh', opacity: 1}}
-                                        duration={1000}
-                                    >
-                                        <div style={{
-                                            width: '100vw',
-                                            height: "100vh",
-                                            transition: 'transform .4s ease-out',
-                                            position: 'absolute',
-                                            bottom: 0,
-                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-                                            zIndex: 2,
-                                            backgroundColor: "#ebc6b4"
-                                        }}/>
-                                    </Tween>
+                                    {/*
+                                        SPLIT BOTTOM
+                                        */}
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '30vh', x: "0vw", opacity: 0}}*/}
+                                    {/*    to={{y: '0vh', x: "0vw", opacity: 1}}*/}
+                                    {/*    duration={1600}*/}
+                                    {/*>*/}
+                                    {/*    <div className={"containerSpliterBottom"}/>*/}
+                                    {/*</Tween>*/}
+                                    {/*/!**/}
+                                    {/*END SPLIT BOTTOM*/}
+                                    {/**!/*/}
 
 
                                     {/*<Tween*/}
-                                    {/*//     from={{y: '0vh', opacity: 0}}*/}
-                                    {/*//     to={{y: '-50vh', opacity: 1}}*/}
-                                    {/*//     duration={1000}*/}
-                                    {/*// >*/}
-                                    {/*//     <div style={{*/}
-                                    {/*//         width: '100vw',*/}
-                                    {/*//         height: "50vh",*/}
-                                    {/*//         transition: 'transform .4s ease-out',*/}
-                                    {/*//         position: 'absolute',*/}
-                                    {/*//         bottom: 0,*/}
-                                    {/*//         zIndex: 2,*/}
-                                    {/*//         backgroundColor: "#e1a68c"*/}
-                                    {/*//     }}/>*/}
-                                    {/*// </Tween>*/}
-
-                                    {/*<Tween*/}
-                                    {/*    from={{y: '-30vh', x: "0vw", opacity: 0}}*/}
-                                    {/*    to={{y: '-20vh', x: "0vw", opacity: 1}}*/}
-                                    {/*    duration={1000}*/}
+                                    {/*    from={{y: '-30vh', x: "-50vw", opacity: 0}}*/}
+                                    {/*    to={{y: '-20vh', x: "-50vw", opacity: 1}}*/}
+                                    {/*    duration={1900}*/}
                                     {/*>*/}
                                     {/*    <h1 style={{*/}
                                     {/*        width: '60%',*/}
@@ -256,9 +200,120 @@ const NewCollectionSlide = () => {
                                     {/*        fontSize: 48,*/}
                                     {/*        letterSpacing: 2,*/}
                                     {/*        textAlign: "center",*/}
-                                    {/*        zIndex: 2*/}
-                                    {/*    }}>222!</h1>*/}
+                                    {/*        zIndex: 4*/}
+                                    {/*    }}>Premier top l</h1>*/}
                                     {/*</Tween>*/}
+
+
+                                    {/*/!**/}
+                                    {/*First Shadow top*/}
+                                    {/**!/*/}
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '-25vh', x: "60vw", opacity: 0}}*/}
+                                    {/*    to={{y: '-25vh', x: "50vw", opacity: 1}}*/}
+                                    {/*    duration={1600}*/}
+                                    {/*>*/}
+                                    {/*    <div style={{*/}
+                                    {/*        height: "100%",*/}
+                                    {/*        width: "200%",*/}
+                                    {/*        transform: "skew(20deg)",*/}
+                                    {/*        boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px"*/}
+                                    {/*    }}>*/}
+                                    {/*    </div>*/}
+
+                                    {/*</Tween>*/}
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '-30vh', x: "0vw", opacity: 0}}*/}
+                                    {/*    to={{y: '-20vh', x: "0vw", opacity: 1}}*/}
+                                    {/*    duration={1900}*/}
+                                    {/*>*/}
+                                    {/*    <h1 style={{*/}
+                                    {/*        width: '60%',*/}
+                                    {/*        marginLeft: '40%',*/}
+                                    {/*        transition: 'transform .4s ease-out',*/}
+                                    {/*        position: 'absolute',*/}
+                                    {/*        color: "white",*/}
+                                    {/*        fontSize: 48,*/}
+                                    {/*        letterSpacing: 2,*/}
+                                    {/*        textAlign: "center",*/}
+                                    {/*        zIndex: 4*/}
+                                    {/*    }}>top r!</h1>*/}
+
+                                    {/*</Tween>*/}
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '50vh', x: "-110vw", opacity: 0}}*/}
+                                    {/*    to={{y: '50vh', x: "-100vw", opacity: 1}}*/}
+                                    {/*    duration={1600}*/}
+                                    {/*>*/}
+                                    {/*    <div*/}
+                                    {/*        style={{*/}
+                                    {/*            height: "100%",*/}
+                                    {/*            width: "200%",*/}
+                                    {/*            transform: "skew(20deg)",*/}
+                                    {/*            boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",*/}
+                                    {/*            position: "absolute",*/}
+                                    {/*            bottom: 0,*/}
+                                    {/*            zIndex: 4*/}
+                                    {/*        }}*/}
+                                    {/*    >*/}
+                                    {/*    </div>*/}
+                                    {/*</Tween>*/}
+
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '30vh', x: "-50vw", opacity: 0}}*/}
+                                    {/*    to={{y: '20vh', x: "-50vw", opacity: 1}}*/}
+                                    {/*    duration={1900}*/}
+                                    {/*>*/}
+                                    {/*    <h1 style={{*/}
+                                    {/*        width: '60%',*/}
+                                    {/*        marginLeft: '40%',*/}
+                                    {/*        transition: 'transform .4s ease-out',*/}
+                                    {/*        position: 'absolute',*/}
+                                    {/*        color: "white",*/}
+                                    {/*        fontSize: 48,*/}
+                                    {/*        letterSpacing: 2,*/}
+                                    {/*        textAlign: "center",*/}
+                                    {/*        zIndex: 4*/}
+                                    {/*    }}>coucou bottom Left</h1>*/}
+                                    {/*</Tween>*/}
+
+                                    {/*<Tween*/}
+                                    {/*    from={{y: '30vh', x: "0vw", opacity: 0}}*/}
+                                    {/*    to={{y: '20vh', x: "0vw", opacity: 1}}*/}
+                                    {/*    duration={3000}*/}
+                                    {/*>*/}
+                                    {/*    <h1 style={{*/}
+                                    {/*        width: '60%',*/}
+                                    {/*        marginLeft: '40%',*/}
+                                    {/*        transition: 'transform .4s ease-out',*/}
+                                    {/*        position: 'absolute',*/}
+                                    {/*        color: "white",*/}
+                                    {/*        fontSize: 48,*/}
+                                    {/*        letterSpacing: 2,*/}
+                                    {/*        textAlign: "center",*/}
+                                    {/*        zIndex: 4*/}
+                                    {/*    }}>coucou bottom right</h1>*/}
+                                    {/*</Tween>*/}
+
+                                    <Tween
+                                        from={{y: '-60vh', x: "0vw", opacity: 0}}
+                                        to={{y: '0vh', x: "0vw", opacity: 1}}
+                                        duration={1600}
+                                    >
+                                        <div style={{
+                                            width: '100vw',
+                                            height: "100vh",
+                                            transition: 'transform .4s ease-out',
+                                            position: 'absolute',
+                                            bottom: 0,
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            zIndex: 4,
+                                            backgroundColor: "#ebc6b4"
+                                        }}/>
+                                    </Tween>
+
+
+                                    {/* 4 */}
 
                                     <Tween
                                         from={{y: '0vh', x: '-30vw', opacity: 0}}
@@ -275,6 +330,311 @@ const NewCollectionSlide = () => {
                                         <div id={"triangle-bottomright"}/>
                                     </Tween>
 
+                                    {/*
+                                        Bubbles Informations
+                                    */}
+                                    <Tween
+                                        from={{y: '0vh', x: "-50vw", opacity: 0}}
+                                        to={{y: '10vh', x: "-40vw", opacity: 1}}
+                                        duration={1000}
+                                    >
+                                        <div style={{
+                                            position: "absolute",
+                                            width: 250,
+                                            height: 250,
+                                            zIndex: 6,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            // background: "#d5bfb3",
+                                            background: " #1787a1",
+                                            borderRadius: 300,
+                                            textAlign: "center",
+                                            color: "white"
+                                        }}>
+                                            <div style={{
+                                                width: 70,
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: 20,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: 64,
+                                                letterSpacing: 2,
+                                                zIndex: 3,
+
+                                            }}>
+                                                <img src={DeadLogo} style={{width: "100%"}}/>
+                                            </div>
+                                            <h4 style={{
+                                                fontWeight: "bold",
+                                                fontSize: 24,
+                                                paddingLeft: 0,
+                                                paddingRight: 0,
+                                                color: "black",
+                                                letterSpacing: 1.3,
+
+                                                paddingBottom: 0,
+                                                margin: 0,
+                                                marginBottom: -10,
+                                                textTransform: "uppercase"
+                                            }}>
+                                                Mortal risk
+                                            </h4>
+
+                                            <p style={{
+                                                width: "70%",
+                                                marginLeft: "auto",
+                                                letterSpacing: 1.1,
+                                                marginRight: "auto",
+                                            }}>
+                                                Almost zero. We provide instructions for use, we are not dogs.
+                                            </p>
+                                        </div>
+                                    </Tween>
+
+                                    <Tween
+                                        from={{y: '0vh', x: "-50vw", opacity: 0}}
+                                        to={{y: '-20vh', x: "-25vw", opacity: 1}}
+                                        duration={1000}
+                                    >
+                                        <div style={{
+                                            position: "absolute",
+                                            width: 250,
+                                            height: 250,
+                                            zIndex: 6,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            // background: "linear-gradient(60deg, #d5bfb3 65%, #1787a1)",
+                                            background: "linear-gradient(220deg, #d5bfb3 15%, #1787a1)",
+                                            borderRadius: 300,
+                                            textAlign: "center",
+                                            color: "white"
+                                        }}>
+                                            <div style={{
+                                                width: 70,
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: 10,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: 64,
+                                                letterSpacing: 2,
+                                                zIndex: 3,
+                                            }}>
+                                                <img src={FuckLogo} style={{width: "100%"}}/>
+                                            </div>
+                                            <h4 style={{
+                                                fontWeight: "bold",
+                                                fontSize: 24,
+                                                paddingLeft: 0,
+                                                paddingRight: 0,
+                                                color: "black",
+                                                letterSpacing: 1.3,
+                                                width: "95%",
+                                                marginLeft: "2.5%",
+                                                paddingBottom: 0,
+                                                margin: 0,
+                                                marginBottom: -10,
+                                                textTransform: "uppercase"
+                                            }}>
+                                                Show your dismay
+                                            </h4>
+
+                                            <p style={{
+                                                width: "70%",
+                                                marginLeft: "auto",
+                                                letterSpacing: 1.1,
+                                                marginRight: "auto",
+                                            }}>
+                                                Want to show that you are not going to accept everything very nicely?
+                                            </p>
+                                        </div>
+                                    </Tween>
+
+                                    <Tween
+                                        from={{y: '-60vh', x: "0vw", opacity: 0}}
+                                        to={{y: '-25vh', x: "0vw", opacity: 1}}
+                                        duration={1000}
+                                    >
+                                        <div style={{
+                                            position: "absolute",
+                                            width: 250,
+                                            height: 250,
+                                            zIndex: 6,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            // backgroundColor: "#95a5a6",
+                                            background: "linear-gradient(220deg, #d5bfb3 50%, #1787a1)",
+                                            borderRadius: 300,
+                                            textAlign: "center",
+                                            color: "white"
+                                        }}>
+                                            <div style={{
+                                                width: 70,
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: 20,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: 64,
+                                                letterSpacing: 2,
+                                                zIndex: 3,
+
+                                            }}>
+                                                <img src={PrisonLogo} style={{width: "100%"}}/>
+                                            </div>
+                                            <h4 style={{
+                                                fontWeight: "bold",
+                                                fontSize: 24,
+                                                paddingLeft: 0,
+                                                paddingRight: 0,
+                                                color: "black",
+                                                letterSpacing: 1.3,
+                                                paddingBottom: 0,
+                                                margin: 0,
+                                                marginBottom: -10,
+                                                textTransform: "uppercase"
+                                            }}>
+                                                Prison risk
+                                            </h4>
+
+                                            <p style={{
+                                                width: "70%",
+                                                marginLeft: "auto",
+                                                letterSpacing: 1.1,
+                                                marginRight: "auto",
+                                            }}>
+                                                We have contacts, don't worry, we manage.
+                                            </p>
+                                        </div>
+                                    </Tween>
+
+                                    <Tween
+                                        from={{y: '0vh', x: "50vw", opacity: 0}}
+                                        to={{y: '-20vh', x: "25vw", opacity: 1}}
+                                        duration={1000}
+                                    >
+                                        <div style={{
+                                            position: "absolute",
+                                            width: 250,
+                                            height: 250,
+                                            zIndex: 6,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            background: "linear-gradient(220deg, #d5bfb3 55%, #1787a1)",
+                                            // background: "linear-gradient(60deg, #d5bfb3 15%, #1787a1)",
+                                            borderRadius: 300,
+                                            textAlign: "center",
+                                            color: "white"
+                                        }}>
+                                            <div style={{
+                                                width: 70,
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: 20,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: 64,
+                                                letterSpacing: 2,
+                                                zIndex: 3,
+
+                                            }}>
+                                                <img src={DrugLogo} style={{width: "100%"}}/>
+                                            </div>
+                                            <h4 style={{
+                                                fontWeight: "bold",
+                                                fontSize: 24,
+                                                paddingLeft: 0,
+                                                paddingRight: 0,
+                                                color: "black",
+                                                letterSpacing: 1.3,
+                                                paddingBottom: 0,
+                                                margin: 0,
+                                                marginBottom: -10,
+                                                textTransform: "uppercase"
+                                            }}>
+                                                Religion
+                                            </h4>
+
+                                            <p style={{
+                                                width: "70%",
+                                                marginLeft: "auto",
+                                                letterSpacing: 1.1,
+                                                marginRight: "auto",
+                                            }}>
+                                                Enter a new vision of your existence, we will tell you what to do.
+                                            </p>
+                                        </div>
+                                    </Tween>
+                                    <Tween
+                                        from={{y: '0vh', x: "50vw", opacity: 0}}
+                                        to={{y: '10vh', x: "40vw", opacity: 1}}
+                                        duration={1000}
+                                    >
+                                        <div style={{
+                                            position: "absolute",
+                                            width: 250,
+                                            height: 250,
+                                            zIndex: 6,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                                            // backgroundColor: "darkgray",
+                                            // background: " #1787a1",
+                                            background: "#d5bfb3",
+                                            borderRadius: 300,
+                                            textAlign: "center",
+                                            color: "white"
+                                        }}>
+                                            <div style={{
+                                                width: 70,
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                marginTop: 20,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: 64,
+                                                letterSpacing: 2,
+                                                zIndex: 3,
+
+                                            }}>
+                                                <img src={CoolLogo} style={{width: "100%"}}/>
+                                            </div>
+                                            <h4 style={{
+                                                fontWeight: "bold",
+                                                fontSize: 24,
+                                                paddingLeft: 0,
+                                                paddingRight: 0,
+                                                color: "black",
+                                                letterSpacing: 1.3,
+                                                paddingBottom: 0,
+                                                margin: 0,
+                                                marginBottom: -10,
+                                                textTransform: "uppercase"
+                                            }}>
+                                                Cool boy
+                                            </h4>
+
+                                            <p style={{
+                                                width: "70%",
+                                                marginLeft: "auto",
+                                                letterSpacing: 1.1,
+                                                marginRight: "auto",
+                                            }}>
+                                                Become the coolest and f*ck whoever you want!
+                                            </p>
+                                        </div>
+                                    </Tween>
+
+                                    {/*
+                                     END OF
+                                     Bubbles Informations
+                                    */}
+
                                     <Tween
                                         from={{y: '140vh', x: '0vw', opacity: 0}}
                                         to={{y: '140vh', x: "0vw", opacity: 1}}
@@ -286,13 +646,13 @@ const NewCollectionSlide = () => {
                                     <Tween
                                         from={{y: '0vh', x: "0vw", opacity: 0}}
                                         to={{y: '0vh', x: "0vw", opacity: 1}}
-                                        duration={1000}
+                                        duration={1600}
                                     >
                                         <div style={{
                                             transition: 'transform .4s ease-out',
                                             position: 'absolute',
                                             bottom: 0,
-                                            zIndex: 2,
+                                            zIndex: 5,
                                             fontWeight: "bold",
                                             textTransform: "uppercase",
                                             fontSize: 60,
@@ -302,139 +662,13 @@ const NewCollectionSlide = () => {
                                         </div>
 
                                     </Tween>
-                                    {/*<Tween*/}
-                                    {/*    from={{y: '-10vh', x: "0vw", opacity: 0}}*/}
-                                    {/*    to={{y: '-10vh', x: "0vw", opacity: 1}}*/}
-                                    {/*    duration={1000}*/}
-                                    {/*>*/}
-                                    {/*</Tween>*/}
+                                    {/* 5 */}
                                 </Timeline>
                             </div>
                         )
                     }
                 </Scene>
             </Controller>
-
-            {/*<Controller>*/}
-            {/*    <Scene duration={1300} pin={true} indicators={false} triggerHook="onLeave">*/}
-            {/*        {*/}
-            {/*            // @ts-ignore*/}
-            {/*            (progress) => (*/}
-            {/*                <div style={{*/}
-            {/*                    display: 'flex',*/}
-            {/*                    alignItems: 'center',*/}
-            {/*                    justifyContent: 'center',*/}
-            {/*                    width: '100%',*/}
-            {/*                    height: '100vh',*/}
-            {/*                    overflow: 'hidden',*/}
-            {/*                    // backgroundImage: `url(${BackgroundImage})`,*/}
-            {/*                    // backgroundPosition: "center",*/}
-            {/*                }}>*/}
-            {/*                    <Timeline totalProgress={progress} paused>*/}
-            {/*                        <Tween*/}
-            {/*                            // from={{y: '-110vh'}}*/}
-            {/*                            // to={{y: '-90vh'}}*/}
-            {/*                            from={{filter: "grayscale(80%)"}}*/}
-            {/*                            to={{filter: "grayscale(0%)"}}*/}
-            {/*                            duration={1200}*/}
-            {/*                        >*/}
-            {/*                            <img src={BackgroundImage} style={{*/}
-            {/*                                width: '100vw',*/}
-            {/*                                height: '100vh',*/}
-            {/*                                // transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                zIndex: 1,*/}
-            {/*                                left: 0,*/}
-            {/*                                top: 0,*/}
-            {/*                            }}/>*/}
-            {/*                        </Tween>*/}
-            {/*                        <Tween*/}
-            {/*                            from={{y: '-110vh'}}*/}
-            {/*                            to={{y: '-90vh'}}*/}
-            {/*                            duration={1000}*/}
-            {/*                        >*/}
-            {/*                            <img src={WhitePowderImage} style={{*/}
-            {/*                                width: '100%',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                zIndex: 1,*/}
-            {/*                                left: 0,*/}
-            {/*                                top: 0*/}
-            {/*                            }}/>*/}
-            {/*                        </Tween>*/}
-            {/*                        <Tween*/}
-            {/*                            from={{y: '70vh', scale: 1}}*/}
-            {/*                            to={{y: '50vh', scale: 1.3}}*/}
-            {/*                            duration={1000}*/}
-            {/*                        >*/}
-            {/*                            <img src={WhitePowderImage} style={{*/}
-            {/*                                width: '100%',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                zIndex: 1,*/}
-            {/*                                left: 0,*/}
-            {/*                                top: 0*/}
-            {/*                            }}/>*/}
-            {/*                        </Tween>*/}
-            {/*                        <Tween*/}
-            {/*                            // from={{y: '40vh', x: "0vh"}}*/}
-            {/*                            // to={{y: '0vh'}}*/}
-            {/*                            from={{y: '150vh', x: '-100vw', scale: 1}}*/}
-            {/*                            to={{y: '15vh', x: '-25vw', scale: 1.3}}*/}
-            {/*                            duration={1300}*/}
-            {/*                        >*/}
-            {/*                            <img src={TransportImage} style={{*/}
-            {/*                                width: '50%',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                zIndex: 2*/}
-            {/*                            }}/>*/}
-            {/*                        </Tween>*/}
-            {/*                        <Tween*/}
-            {/*                            from={{y: '100vh', opacity: 0.5}}*/}
-            {/*                            to={{y: '30vh', opacity: 0.6}}*/}
-            {/*                            duration={1000}*/}
-            {/*                        >*/}
-            {/*                            <img src={cloud} style={{*/}
-            {/*                                width: '120%',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                zIndex: 2*/}
-            {/*                            }}/>*/}
-            {/*                        </Tween>*/}
-
-            {/*                        <Tween*/}
-            {/*                            from={{y: '-30vh', x: "0vw", opacity: 0}}*/}
-            {/*                            to={{y: '-20vh', x: "0vw", opacity: 1}}*/}
-            {/*                            duration={1000}*/}
-            {/*                        >*/}
-            {/*                            <h1 style={{*/}
-            {/*                                width: '60%',*/}
-            {/*                                marginLeft: '40%',*/}
-            {/*                                transition: 'transform .4s ease-out',*/}
-            {/*                                position: 'absolute',*/}
-            {/*                                color: "white",*/}
-            {/*                                fontSize: 48,*/}
-            {/*                                letterSpacing: 2,*/}
-            {/*                                textAlign: "center",*/}
-            {/*                                zIndex: 2*/}
-            {/*                            }}>Fast Delivery!</h1>*/}
-            {/*                        </Tween>*/}
-            {/*                        <Tween*/}
-            {/*                            duration={1000}*/}
-            {/*                        >*/}
-            {/*                            <></>*/}
-            {/*                        </Tween>*/}
-            {/*                    </Timeline>*/}
-
-            {/*                </div>*/}
-            {/*            )*/}
-            {/*        }*/}
-            {/*    </Scene>*/}
-            {/*</Controller>*/}
-
-
         </div>
     );
 };

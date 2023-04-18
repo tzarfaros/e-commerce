@@ -1,14 +1,15 @@
 .containerListAvantages {
     width: 100vw;
-    height: 40vh;
+    height: 42vh;
     background-position: center;
     background-attachment: fixed;
-    filter: grayscale(100%); /*background-color: #2e2e2e;*/
+    /*filter: grayscale(100%); !*background-color: #2e2e2e;*!*/
     /*background-image: url("../../assets/images/images/greens-look-portrait-inja-zalta-wallpaper-594ff94c3d01bdd8192219261b8eb858.jpg");*/
     /*background-image: url("../../assets/images/images/peakpx.jpg");*/
     /*background-image: url("../../assets/images/images/5445750.jpg");*/
     /*background-image: url("../../assets/images/images/35405850-jpg.png");*/
-    background-image: url("../../assets/images/images/1920-x-1080-2022-Pills-Cyan.jpg");
+
+    /*background-image: url("../../assets/images/images/1920-x-1080-2022-Pills-Cyan.jpg");*/
 
     display: flex;
     flex-direction: row;
@@ -16,6 +17,13 @@
     justify-content: space-around;
     color: white;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.containerListAvantagesVideo {
+    width: 100vw;
+    position: absolute;
+    z-index: -10;
+
 }
 
 #myVideo {
@@ -28,11 +36,23 @@
 
 .containerListAvantagesItem {
     /*background-color: rgba(46, 46, 46, 0.7);*/
-    background-color: rgba(46, 46, 46, 0.8);
+    background-color: rgba(46, 46, 46, 0.9);
     width: 200px;
     height: 200px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 32px;
+    text-align: center;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.containerListAvantagesItemCenter {
+    /*background-color: rgba(46, 46, 46, 0.7);*/
+    background-color: rgba(46, 46, 46, 0.9);
+    width: 220px;
+    height: 220px;
+    margin-top: auto;
+    margin-bottom: auto;
     border-radius: 32px;
     text-align: center;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;

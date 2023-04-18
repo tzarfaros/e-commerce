@@ -11,8 +11,17 @@ const HeaderRender = () => {
     }, []);
     return (
         <div className={scroll ? "containerHeader headerBackground" : "containerHeader"}>
-            <div className={scroll ? "triangleHeaderLeft" : ""}/>
-            <div className={"triangleHeaderRight"}/>
+            {
+                scroll ?
+                    <>
+                        <div className={"triangleHeaderLeft"}/>
+                        <div className={"triangleHeaderRight"}/>
+                    </>
+                    :
+                    <></>
+            }
+            {/*<div className={scroll ? "triangleHeaderLeft" : ""}/>*/}
+
             <div className={"containerHeaderTitle"}>
                 <h1><span className={"titleSpanBeige"}>Silk</span> Rail</h1>
                 {/*<div className={"lineHeader"}/>*/}
@@ -39,7 +48,12 @@ const HeaderRender = () => {
             </div>
 
             <div className={"containerHeaderRight"}>
-                <div className={"buttonConnect"}>
+                <div
+                    className={"buttonConnect"}
+                    onClick={((e) => {
+                        window.location.href = "/connect"
+                    })}
+                >
                     Connect
                 </div>
             </div>
